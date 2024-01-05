@@ -10,7 +10,7 @@ router.route("/").post(async (req, res) => {
     const { username, password } = req.body;
     const [admin] = await Admin.find({ username, password });
     if (!admin) {
-      throw new Error("User not found.");
+      throw new Error("Username or password is incorrect.");
     }
     const accessToken = generateAccessToken(JSON.parse(JSON.stringify(admin)));
     console.log(accessToken);
