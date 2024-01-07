@@ -3,16 +3,16 @@ const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
-const Admin = require("../../models/Admin");
+const User = require("../../models/User");
 
 router.route("/").post(async (req, res) => {
   try {
     const { username, password } = req.body;
-    const [admin] = await Admin.find({ username, password });
-    if (!admin) {
+    const [user] = await User.find({ username, password });
+    if (!user) {
       throw new Error("Username or password is incorrect.");
     }
-    const accessToken = generateAccessToken(JSON.parse(JSON.stringify(admin)));
+    const accessToken = generateAccessToken(JSON.parse(JSON.stringify(user)));
     console.log(accessToken);
     res.json({ accessToken });
   } catch (error) {
