@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { StatusCodes } = require("http-status-codes");
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.route("/").post(async (req, res) => {
     console.log(accessToken);
     res.json({ accessToken });
   } catch (error) {
-    res.status(401).send(error.message);
+    res.status(StatusCodes.UNAUTHORIZED).send(error.message);
   }
 });
 

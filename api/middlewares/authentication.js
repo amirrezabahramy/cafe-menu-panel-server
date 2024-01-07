@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { StatusCodes } = require("http-status-codes");
 
 const authenticate = (req, res, next) => {
   try {
@@ -15,7 +16,7 @@ const authenticate = (req, res, next) => {
       next();
     });
   } catch (error) {
-    res.status(401).send(error.message);
+    res.status(StatusCodes.UNAUTHORIZED).send(error.message);
   }
 };
 

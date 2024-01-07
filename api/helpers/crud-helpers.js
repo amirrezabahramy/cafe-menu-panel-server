@@ -1,9 +1,11 @@
+const { StatusCodes } = require("http-status-codes");
+
 const getAllFromCollection = (Collection) => async (req, res) => {
   try {
     const items = await Collection.find(req.query);
-    res.status(200).json(items);
+    res.status(StatusCodes.OK).json(items);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(StatusCodes.BAD_REQUEST).send(error.message);
   }
 };
 
@@ -11,18 +13,18 @@ const addToCollection = (Collection) => async (req, res) => {
   try {
     const item = new Collection(req.body);
     await item.save();
-    res.status(201).json(item);
+    res.status(StatusCodes.CREATED).json(item);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(StatusCodes.BAD_REQUEST).send(error.message);
   }
 };
 
 const getFromCollection = (Collection) => async (req, res) => {
   try {
     const item = await Collection.findById(req.params.id);
-    res.status(200).json(item);
+    res.status(StatusCodes.OK).json(item);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(StatusCodes.BAD_REQUEST).send(error.message);
   }
 };
 
@@ -32,9 +34,9 @@ const updateFromCollection = (Collection) => async (req, res) => {
       { _id: req.params.id },
       req.body
     );
-    res.status(200).json(item);
+    res.status(StatusCodes.OK).json(item);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(StatusCodes.BAD_REQUEST).send(error.message);
   }
 };
 
@@ -43,9 +45,9 @@ const removeFromCollection = (Collection) => async (req, res) => {
     const item = await Collection.findOneAndDelete({
       _id: req.params.id,
     });
-    res.status(202).json(item);
+    res.status(StatusCodes.ACCEPTED).json(item);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(StatusCodes.BAD_REQUEST).send(error.message);
   }
 };
 
