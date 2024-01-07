@@ -1,5 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
@@ -8,9 +9,12 @@ const User = require("../../models/User");
 router.route("/").post(async (req, res) => {
   try {
     const { username, password } = req.body;
-    const [user] = await User.find({ username, password });
+    const [user] = await User.find({ username });
     if (!user) {
-      throw new Error("Username or password is incorrect.");
+      throw new Error("User not found.");
+    }
+    if (!(await bcrypt.compare(password, user.password))) {
+      throw new Error("Password is incorrect.");
     }
     const accessToken = generateAccessToken(JSON.parse(JSON.stringify(user)));
     console.log(accessToken);
