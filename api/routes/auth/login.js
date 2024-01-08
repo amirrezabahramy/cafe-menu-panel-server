@@ -18,7 +18,6 @@ router.route("/").post(async (req, res) => {
       throw new Error("Password is incorrect.");
     }
     const accessToken = generateAccessToken(JSON.parse(JSON.stringify(user)));
-    console.log(accessToken);
     res.json({ accessToken });
   } catch (error) {
     res.status(StatusCodes.UNAUTHORIZED).send(error.message);
